@@ -11,8 +11,8 @@ file = open('maze.txt', 'w')
 
 height = randrange(100)
 width = randrange(200)
-start = [randrange(width), randrange(height)]
-end = [randrange(width), randrange(height)]
+start = [randrange(height), randrange(width)]
+end = [randrange(height), randrange(width)]
 obstacles = []
 for i in range(randint(0,100)):
     obstacles.append([randrange(width - 1), randrange(height - 1), randrange(10), randrange(10)])

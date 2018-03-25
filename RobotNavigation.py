@@ -45,7 +45,7 @@ display = draw.guiDisplay(problem)
 
 
 #Create the Puzzle Solver Object
-Solver = strategy.DFSStrategy(problem)
+Solver = strategy.BFSStrategy(problem)
 
 Solver.addDrawObject(display)
 print(problem.maze)
@@ -56,15 +56,19 @@ while not done:
 	
 	while not gotPath:
 		path, gotPath = Solver.solve(startState, endState)
+  
 	done = Solver.drawMaze()
 	if not printedPath:
-             dlist = []
-             for member in path:
-                 dlist.append(member.direction.name)
+             if (path == None):
+                 print("There is no path to goal")
+             else:
+                 dlist = []
+                 for member in path:
+                     dlist.append(member.direction.name)
              
-             print(dlist)
-             print("Length of Path: " + str(path[-1].cost))
-             print("Number of Nodes Explored: " + str(Solver.score))
+                 print(dlist)
+                 print("Length of Path: " + str(path[-1].cost))
+                 print("Number of Nodes Explored: " + str(Solver.score))
               
              printedPath = True
 
