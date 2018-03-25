@@ -42,9 +42,7 @@ endState = mazestate.PuzzleState(goalState, direction=4)
 
 
 display = draw.guiDisplay(problem)
-done = False
-while not done:
-    done = display.drawMainMenu()
+
 
 #Create the Puzzle Solver Object
 Solver = strategy.BFSStrategy(problem)
@@ -60,11 +58,15 @@ while not done:
 		path, gotPath = Solver.solve(startState, endState)
 	done = Solver.drawMaze()
 	if not printedPath:
-		for member in path:
-			print(member.direction.name)
-			print(member.cost)
-		print(Solver.score)
-		printedPath = True
+             dlist = []
+             for member in path:
+                 dlist.append(member.direction.name)
+             
+             print(dlist)
+             print("Length of Path: " + str(path[-1].cost))
+             print("Number of Nodes Explored: " + str(Solver.score))
+              
+             printedPath = True
 
 
 display.closeMaze()
