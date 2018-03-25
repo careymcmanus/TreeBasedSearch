@@ -80,6 +80,7 @@ class DFSStrategy(Strategy):
         thisState = self.Frontier.pop() #Removes the value at the start of the list
         self.Searched.append(thisState)
         self.puzzle.maze[thisState.location[1]][thisState.location[0]]=3
+        self.score = self.score + 1
         return thisState
 
 class UCSStrategy(Strategy):

@@ -45,7 +45,7 @@ display = draw.guiDisplay(problem)
 
 
 #Create the Puzzle Solver Object
-Solver = strategy.BFSStrategy(problem)
+Solver = strategy.DFSStrategy(problem)
 
 Solver.addDrawObject(display)
 print(problem.maze)
