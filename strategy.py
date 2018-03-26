@@ -1,5 +1,5 @@
 import mazeDrawer as draw
-
+import random
 """ The strategy class is the super class for the different 
 strategies for solving the maze problem. The super class defines 
 all the functions except for the getNextState function which is 
@@ -49,9 +49,10 @@ class Strategy():
                 for state in thisState.neighbours:
                     self.addToFrontier(state)
                     self.drawMaze()
+            
         
         #No Solution Found and we've run out of nodes to search
-        return None, gotPath
+        return None, True
 
     def addDrawObject(self, drawObject):
         self.drawObject = drawObject
@@ -78,6 +79,19 @@ class DFSStrategy(Strategy):
 
     def getNextState(self):
         thisState = self.Frontier.pop() #Removes the value at the start of the list
+        self.Searched.append(thisState)
+        self.puzzle.maze[thisState.location[1]][thisState.location[0]]=3
+        self.score = self.score + 1
+        return thisState
+        
+class STSStrategy(Strategy):
+    def __init__(self,puzzle):
+        super().__init__(puzzle)
+        self.code = "STS"
+        self.longName = "Stochastic Tree Search"
+        
+    def getNextState(self):
+        thisState = self.Frontier.pop(random.randrange(len(self.Frontier)))
         self.Searched.append(thisState)
         self.puzzle.maze[thisState.location[1]][thisState.location[0]]=3
         self.score = self.score + 1
