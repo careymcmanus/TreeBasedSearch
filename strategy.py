@@ -83,6 +83,26 @@ class DFSStrategy(Strategy):
         self.puzzle.maze[thisState.location[1]][thisState.location[0]]=3
         self.score = self.score + 1
         return thisState
+
+class DLSStrategy(Strategy):
+    def __init__(self, puzzle):
+        super().__init__(puzzle)
+        self.code = "DLS"
+        self.longName = "Depth-Limited-Search"
+        self.limit = 20
+        self.currentDepth = 0
+
+    def getNextState(self):
+        if (self.currentDepth < self.limit):
+            thisState = self.Frontier.pop() #Removes the value at the start of the list
+            self.currentDepth = self.currentDepth + 1
+        else:
+            thisState = self.Frontier.pop(0)
+
+        self.Searched.append(thisState)
+        self.puzzle.maze[thisState.location[1]][thisState.location[0]]=3
+        self.score = self.score + 1
+        return thisState
         
 class STSStrategy(Strategy):
     def __init__(self,puzzle):
