@@ -23,6 +23,28 @@ def readProblem():
             obstacles.append(obst)
     return gridSize, initialState, goalState, obstacles
 
+def getInput():
+    print("Select a Strategy for solving problem: ")
+    print("1: Breadth-First Search")
+    print("2: Depth-First Search")
+    print("3: Uniform Cost Search")
+    print("4: Greedy Best First Search")
+    print("5: A* Search")
+    value = input("Select a Number: ")
+    if (value == '1'):
+        Solver = strategy.BFSStrategy(problem)
+    elif (value == '2'):
+        Solver = strategy.DFSStrategy(problem)
+    elif (value == '3'):
+        Solver = strategy.UCSStrategy(problem)
+    elif (value == '4'):
+        Solver = strategy.GBFStrategy(problem)
+    elif (value == '5'):
+        Solver = strategy.AStrategy(problem)
+    else:
+        print("Please choose a number between 1 and 5!")
+        return None
+    return Solver
 
 #Read the puzzle information from the text file.
 gridSize, initialState, goalState, obstacles = readProblem()
@@ -38,14 +60,11 @@ problem.populateMaze()
 startState = mazestate.PuzzleState(initialState, direction=3)
 endState = mazestate.PuzzleState(goalState, direction=4)
 
-
-
-
 display = draw.guiDisplay(problem)
 
-
-#Create the Puzzle Solver Object
-Solver = strategy.BFSStrategy(problem)
+Solver = getInput()
+while (Solver == None):
+    Solver = getInput()
 
 Solver.addDrawObject(display)
 print(problem.maze)

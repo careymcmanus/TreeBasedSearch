@@ -3,10 +3,10 @@ import numpy as np
 import math 
 
 class directions(Enum):
-    LEFT = -1
-    RIGHT = 1
-    UP = 0
-    DOWN = 2
+    LEFT = 2
+    RIGHT = 0
+    UP = 1
+    DOWN = -1
     START = 3
     FINISH = 4
 
@@ -21,21 +21,22 @@ class PuzzleState:
         self.cost = cost
         self.heuristic = 0
     
+    
     def populateNeighbours(self, maze, state):
         neighbours = []
         directionsFrom = []
         ylim, xlim = maze.maze.shape
         for i in range(-1,2,2):
-            xIndex = state[0] + i
-            yIndex = state[1]
+            xIndex = state[0] 
+            yIndex = state[1] - i
         
             if (xIndex < xlim) & (xIndex >= 0)  & (yIndex < ylim) & (yIndex >= 0):
                 if (maze.maze[yIndex][xIndex] == 0):        
                     neighbours.append([xIndex, yIndex])
                     directionsFrom.append(directions(i))
                 
-            xIndex = state[0]
-            yIndex = state[1] + i
+            xIndex = state[0] - i
+            yIndex = state[1] 
         
             if (xIndex < xlim) & (xIndex >= 0)  & (yIndex < ylim) & (yIndex >= 0):
                 if (maze.maze[yIndex][xIndex] == 0):
