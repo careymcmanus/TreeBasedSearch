@@ -52,6 +52,7 @@ class PuzzleState:
         
         for i in range(len(nlist)):
             if (dlist[i] == directions(0)):
+                print(directions(0))
                 self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[0]), dirCost=self.directionCost))
             elif (dlist[i] == directions(1)):
                 self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[1]), dirCost=self.directionCost))

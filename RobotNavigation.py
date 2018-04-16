@@ -23,6 +23,7 @@ def readProblem():
             obstacles.append(obst)
     return gridSize, initialState, goalState, obstacles
 
+
 def getInput():
     print("Select a Strategy for solving problem: ")
     print("1: Breadth-First Search")
@@ -44,14 +45,22 @@ def getInput():
     else:
         print("Please choose a number between 1 and 5!")
         return None
-    
 
-    print("Do you want uniform Cost")
+    print("Do you want to change the cost function? ")
     value = input("y/n: ")
     if (value == 'y'):
-        cost = [1,1,1,1]
+        print("Please enter the costs: ")
+        up = input("Up: ")
+        down = input("Down: ")
+        right = input("Right: ")
+        left = input("Left: ")
+        try:
+            cost = [int(right), int(up), int(left), int(down)]
+        except:
+            print("invalid cost values, reverting to uniform cost")
+            cost = [1,1,1,1]
     else:
-        cost = [2,1,4,3]
+        cost = [1,1,1,1]
 
     return Solver, cost
 
@@ -94,7 +103,7 @@ while not done:
              else:
                  dlist = []
                  for member in path:
-                     dlist.append(member.direction.name)
+                     dlist.append([member.direction.name, member.cost])
              
                  print(dlist)
                  print("Length of Path: " + str(path[-1].cost))
