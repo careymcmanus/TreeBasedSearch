@@ -44,7 +44,17 @@ def getInput():
     else:
         print("Please choose a number between 1 and 5!")
         return None
-    return Solver
+    
+
+    print("Do you want uniform Cost")
+    value = input("y/n: ")
+    if (value == 'y'):
+        cost = [1,1,1,1]
+    else:
+        cost = [2,1,4,3]
+
+    return Solver, cost
+
 
 #Read the puzzle information from the text file.
 gridSize, initialState, goalState, obstacles = readProblem()
@@ -55,16 +65,17 @@ problem = maze.maze(gridSize, obstacles)
 #populate the maze array with the obstacles
 problem.populateMaze()
 
+Solver, cost = getInput()
+while (Solver == None):
+    Solver, cost = getInput()
+
 
 #Create the start and end state giving them directions of start and end
-startState = mazestate.PuzzleState(initialState, direction=3)
+startState = mazestate.PuzzleState(initialState, direction=3, dirCost=cost)
 endState = mazestate.PuzzleState(goalState, direction=4)
 
 display = draw.guiDisplay(problem)
 
-Solver = getInput()
-while (Solver == None):
-    Solver = getInput()
 
 Solver.addDrawObject(display)
 print(problem.maze)
@@ -88,7 +99,7 @@ while not done:
                  print(dlist)
                  print("Length of Path: " + str(path[-1].cost))
                  print("Number of Nodes Explored: " + str(Solver.score))
-              
+                               
              printedPath = True
 
 

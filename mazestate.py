@@ -12,12 +12,13 @@ class directions(Enum):
 
 class PuzzleState:
     
-    def __init__(self, location, parentState=None, direction=3, cost=0):
+    def __init__(self, location, parentState=None, direction=3, cost=0, dirCost=[1,1,1,1]):
         
         self.location = location
         self.parentState = parentState
         self.direction = directions(direction)
         self.neighbours = []
+        self.directionCost = dirCost
         self.cost = cost
         self.heuristic = 0
     
@@ -48,12 +49,16 @@ class PuzzleState:
     def findChildren(self, puzzle, goalState=None):
         
         nlist, dlist = self.populateNeighbours(puzzle,  self.location)
+        
         for i in range(len(nlist)):
             if (dlist[i] == directions(0)):
-                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+1)))
+                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[0]), dirCost=self.directionCost))
+            elif (dlist[i] == directions(1)):
+                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[1]), dirCost=self.directionCost))
+            elif (dlist[i] == directions(2)):
+                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[2]), dirCost=self.directionCost))
             else:
-                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+1)))
-
+                self.neighbours.append(PuzzleState(nlist[i], parentState=self , direction=dlist[i], cost=(self.cost+self.directionCost[3]), dirCost=self.directionCost))
         if not goalState == None:
             for member in self.neighbours:
                 member.setHeuristic(goalState)
@@ -80,3 +85,6 @@ class PuzzleState:
                 
             result.append(self)
         return result    
+
+    def setDirCost(self, dirCost):
+        self.directionCost = dirCost
