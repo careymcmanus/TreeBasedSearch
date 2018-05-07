@@ -6,3 +6,6 @@ Python 3 - This repo wont work with Python 2
 ### Modules
 numpy </br>
 pygame
+
+## To RUn
+type python RobotNavigation
